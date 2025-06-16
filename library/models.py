@@ -24,7 +24,7 @@ class Book(models.Model):
     publication_date = models.DateField(verbose_name='Дата публикации')
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE, verbose_name='Автор')
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.title
 
     class Meta:
