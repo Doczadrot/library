@@ -1,0 +1,63 @@
+[33mcommit cfd9c62d69c211629511a633a1429c32aeb580e3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Dockzadrot <126706920+Dockzadrot@users.noreply.github.com>
+Date:   Mon Jun 16 11:48:37 2025 +0300
+
+    feat: implement library app views, templates, and static files
+    
+    - Add views for books list and detail pages
+    - Create templates for books list and detail views
+    - Configure static files and templates directories
+    - Add admin static files and assets
+    - Update settings for static files and templates
+    - Implement URL routing for library app
+    - Add basic CSS and JS files for frontend
+
+[33mcommit 6427a9d563795d36f1ba5f2fba24648235c2d6b3[m[33m ([m[1;31morigin/feature/updates[m[33m, [m[1;32mfeature/updates[m[33m)[m
+Author: Dockzadrot <126706920+Dockzadrot@users.noreply.github.com>
+Date:   Thu Jun 5 22:13:58 2025 +0300
+
+    овые изменения в модели книг
+
+[33mcommit 0cf7bfd340d007e43c552c62cfa64437ae0faa24[m
+Author: Dockzadrot <126706920+Dockzadrot@users.noreply.github.com>
+Date:   Thu Jun 5 21:51:41 2025 +0300
+
+    азрешение конфликтов
+
+[33mcommit 2d6cc63d594423a1284d0a812fd1060678b891d1[m
+Merge: 18a1f73 f5d968f
+Author: Dockzadrot <126706920+Dockzadrot@users.noreply.github.com>
+Date:   Thu Jun 5 21:51:08 2025 +0300
+
+    азрешение конфликтов
+
+[33mcommit 18a1f739a37e097ecedc71784b7f89f79e6c1509[m
+Author: Dockzadrot <126706920+Dockzadrot@users.noreply.github.com>
+Date:   Thu Jun 5 21:51:03 2025 +0300
+
+    иксация изменений перед обновлением
+
+[33mcommit f5d968f8038b6d5b45880bb7b002566048915f4a[m
+Author: Doczadrot <doczadrot@example.com>
+Date:   Thu Jun 5 14:59:16 2025 +0300
+
+    Добавляем фикстуры
+
+[33mcommit 21236e4d5e237b5dee71360b4077cdd70c795bb5[m
+Author: Doczadrot <doczadrot@example.com>
+Date:   Tue Jun 3 15:14:06 2025 +0300
+
+    feat: initialize Django library project with basic structure
+    
+    This commit sets up the initial Django project structure including:
+    - Core Django configuration files (settings, urls, wsgi, asgi)
+    - Basic app structure for library management
+    - Initial models for Author and Book
+    - Basic test and admin files
+    - Gitignore for Python/Django projects
+
+[33mcommit e2cedd2ea9d2f6e1adc35d487bd9fdeb689f8c3b[m
+Author: Doczadrot <doczadrot@example.com>
+Date:   Tue Jun 3 15:09:02 2025 +0300
+
+    first commit
