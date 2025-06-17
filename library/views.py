@@ -17,4 +17,6 @@ def books_detail(request, book_id):
     """Отображает детали книги."""
     book = Book.objects.get(id=book_id)
     context = {'book': book}
-    return render(request, template_name='library/book_detail.html', context=context)
+    return render(request, template_name='library/books_detail.html', context=context)
+
+
