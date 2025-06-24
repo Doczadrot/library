@@ -1,22 +1,38 @@
 from django import template
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
+
 from .models import Book
-
-#Эта функция предназначена для показа списка всех книг.
-def books_list(request):
-    """Отображает список книг."""
-    books = Book.objects.all() #говорим джанго - выведи все обьекты относящиеся  к классу Book в переменную books
-    #создаем словарь, где ключ 'books' и значение books
-    context = {'books': books}
-    return render(request, 'library/books_list.html', context)
+from django.views.generic import ListView, DeleteView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
-#второ контролеер - детальное изображение книги
-def books_detail(request, book_id):
-    """Отображает детали книги."""
-    book = Book.objects.get(id=book_id)
-    context = {'book': book}
-    return render(request, template_name='library/books_detail.html', context=context)
+class BooksListView(ListView):
+    model = Book
+    template_name = 'library/books_list.html'
+    context_object_name = 'books'
 
+class BookCreateView(CreateView):
+    model = Book
+    fields = ['title', 'publication_date', 'autor']
+    template_name = 'library/book_form.html'
+    success_url = reverse_lazy('library:books_list')
+
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'library/book_detail.html'
+    context_object_name = 'book'
+
+
+class BookUpdateView(UpdateView):
+    model = Book
+    fields = ['title', 'autor', 'publication_date']
+    template_name = 'library/book_form.html'
+    success_url = reverse_lazy('library:books_list')
+
+class BookDeleteView(DeleteView):
+    model = Book
+    success_url = reverse_lazy('library:books_list')
+    template_name = 'library/book_confirm_delete.html'
 
