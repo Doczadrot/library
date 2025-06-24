@@ -1,10 +1,15 @@
 from django.urls import path
 from django.contrib import admin
-from .views import books_list, books_detail
+
+from .views import BooksListView, BookDetailView, BookCreateView, BookDeleteView, BookUpdateView
 
 app_name = "library"
 
 urlpatterns = [
-    path('books_list/', books_list, name='books_list'),
-    path('books_detail/<int:book_id>/', books_detail, name='books_detail'),
+    path('admin/', admin.site.urls),
+    path('books/', BooksListView.as_view(), name='books_list'),
+    path('books/<int:pk>/', BookDetailView.as_view(), name='book_detail'),
+    path('books/new/', BookCreateView.as_view(), name='book_create'),
+    path('books/<int:pk>/update/', BookUpdateView.as_view(), name='book_update'),
+    path('books/<int:pk>/delete/', BookDeleteView.as_view(), name='book_delete'),
 ]
