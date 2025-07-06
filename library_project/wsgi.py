@@ -1,9 +1,9 @@
 """
-Конфигурация WSGI для проекта library_project.
+WSGI config for library_project project.
 
-Этот файл предоставляет вызываемый объект WSGI как переменную уровня модуля с именем ``application``.
+It exposes the WSGI callable as a module-level variable named ``application``.
 
-Дополнительную информацию об этом файле см. на странице
+For more information on this file, see
 https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
