@@ -1,10 +1,8 @@
-<div class="header">
+<header>
      <h1>Библиотека</h1>
-    <nav>
-        <a href="{% url 'library:book_create' %}">Добавить книгу</a>
-        <a href="{% url 'library:books_list' %}">Cписок книг</a>
-        <a href="{% url 'library:autors_list' %}">Список автора</a>
-        <a href="{% url 'library:autors_create' %}">Добавить автора</a>
-    </nav>
-</div>
+     {% if user.is_authenticated %}
+          <p> Добро пожаловать, {{ user.email }}</p>
+     {% else %}
+          <p> Доброе пожаловать на сайт</p>
+     {% endif %}
 </header>
