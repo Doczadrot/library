@@ -3,11 +3,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .forms import AutorForm, BookForm
-
 from .models import Book, Autor
-
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 class AutorListView(ListView):
     model = Autor
@@ -15,13 +15,13 @@ class AutorListView(ListView):
     context_object_name = 'autors'
 
 
-class AutorCreateView(CreateView):
+class AutorCreateView(LoginRequiredMixin, CreateView):
     model = Autor
     form_class = AutorForm
     template_name = 'library/autor_form.html'
     success_url = reverse_lazy('library:autors_list')
 
-class AutorUpdateView(UpdateView):
+class AutorUpdateView(LoginRequiredMixin, UpdateView):
     model = Autor
     form_class = AutorForm
     template_name = 'library/autor_form.html'
@@ -29,33 +29,41 @@ class AutorUpdateView(UpdateView):
 
 
 
-class BooksListView(ListView):
+class BooksListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Book
     template_name = 'library/books_list.html'
     context_object_name = 'books'
+    permission_required = 'library.veiw_book'
 
 
 
-class BookCreateView(CreateView):
+class BookCreateView(LoginRequiredMixin, PermissionRequiredMixin ,CreateView):
     model = Book
     form_class = BookForm
     template_name = 'library/book_form.html'
     success_url = reverse_lazy('library:books_list')
+    permission_required = 'library.add_book'
 
-class BookDetailView(DetailView):
+class BookDetailView(LoginRequiredMixin,  DetailView):
     model = Book
     template_name = 'library/book_detail.html'
     context_object_name = 'book'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['autor_books_count'] = Book.objects.filter(autor=self.object.autor).count()
+        return context
 
-class BookUpdateView(UpdateView):
+class BookUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Book
     form_class = BookForm
     template_name = 'library/book_form.html'
     success_url = reverse_lazy('library:books_list')
+    permission_required = 'library.change_book'
 
-class BookDeleteView(DeleteView):
+class BookDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Book
     success_url = reverse_lazy('library:books_list')
     template_name = 'library/book_confirm_delete.html'
+    permission_required = 'library.delete_book'
 

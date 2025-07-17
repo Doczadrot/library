@@ -11,8 +11,7 @@ class AutorForm(forms.ModelForm):
         super(AutorForm, self).__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите имя'})
         self.fields['last_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите Фамилию'})
-        self.fields['birth_date'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите дату рождения'
-                                                                                ''})
+        self.fields['birth_date'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите дату рождения'})
     def clean(self):
         #clean =  метод для выполнения валиадации для нескольких полей
         cleaned_data = super().clean()
