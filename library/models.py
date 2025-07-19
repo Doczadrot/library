@@ -22,7 +22,10 @@ class Book(models.Model):
     """
     title = models.CharField(max_length=200, verbose_name='Название')
     publication_date = models.DateField(verbose_name='Дата публикации')
-    autor = models.ForeignKey(Autor, on_delete=models.CASCADE, verbose_name='Автор')
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE, verbose_name='books')
+    #мы в книги укажем ревью
+    review = models.TextField(null=True, blank=True)
+    recommend = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -31,3 +34,8 @@ class Book(models.Model):
         verbose_name = 'Книга'
         verbose_name_plural = 'Книги'
         ordering = ['title']
+#Добавляем кастомные правадоступа
+        permissions = [
+            ('can_review_book', 'Просмотр книги'),
+            ('can_recommend_book', 'Рекомендация книги')
+        ]
