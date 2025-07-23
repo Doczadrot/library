@@ -6,6 +6,9 @@ from .forms import AutorForm, BookForm
 from .models import Book, Autor
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, View
+from django.views.decorators.cache import cache_page # импортирием для работы с кэшем страницы
+from django.utils.decorators import method_decorator   # для указания конкретного кэша
+from django.core.cache import cache
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
@@ -13,7 +16,16 @@ class AutorListView(ListView):
     model = Autor
     template_name = 'library/autors_list.html'
     context_object_name = 'autors'
+    #переопределяем кверисет
+    def get_queryset(self):
+        queryset = cache.get('autors_queryset')
 
+#если кверисет пустой
+        if not queryset:
+            queryset = super().get_queryset() # мы выводим  значения значеги кверисет из БД делаем через супер
+
+            cache.set('autors_queryset', queryset, 60 * 15)
+        return queryset
 
 class AutorCreateView(LoginRequiredMixin, CreateView):
     model = Autor
@@ -28,7 +40,7 @@ class AutorUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('library:autors_list')
 
 
-
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class BooksListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Book
     template_name = 'library/books_list.html'
@@ -44,6 +56,8 @@ class BookCreateView(LoginRequiredMixin, PermissionRequiredMixin ,CreateView):
     success_url = reverse_lazy('library:books_list')
     permission_required = 'library.add_book'
 
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class BookDetailView(LoginRequiredMixin,  DetailView):
     model = Book
     template_name = 'library/book_detail.html'
