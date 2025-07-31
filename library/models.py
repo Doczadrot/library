@@ -37,5 +37,13 @@ class Book(models.Model):
 #Добавляем кастомные правадоступа
         permissions = [
             ('can_review_book', 'Просмотр книги'),
-            ('can_recommend_book', 'Рекомендация книги')
+            ('can_recommend_book', 'Рекомендация книги'),
         ]
+
+class Review(models.Model):
+     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews')
+     rating = models.IntegerField()
+     comment = models.TextField
+
+     def __str__(self):
+         return f'Публикация для {self.title}'

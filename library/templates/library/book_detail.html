@@ -11,6 +11,9 @@
  <p> Автор: {{ book.autor.first_name}} {{ book.autor.last_name}}</p>
  <p> Дата публикации: {{ book.publication_date|date:'d.m.Y' }}</p>
 <p> Количество книг автора: {{ autor_books_count }}</p>
+
+<p>Средний рейтинг: {{ avarage_rating }}</p>
+<p>Popular: {{ is_popular|yesno:'Da,Net'}}</p>
 <a href="{% url 'library:book_update' book.pk %}" class="btn btn-secondary">Редактировать</a>
 <a href="{% url 'library:book_delete' book.pk %}" class="btn btn-danger">Удалить</a>
 <a href="{% url 'library:books_list' %}" class="btn btn-primary">Вернуться к списку</a>
