@@ -22,7 +22,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'  # Считываем переменную окружения
 
 # Настройка ALLOWED_HOSTS для разработки
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "*"]
 
 
 # Application definition
@@ -148,7 +148,7 @@ LOGIN_URL = 'users:login'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        "LOCATION": 'redis://localhost:6379/1',
+        "LOCATION": 'redis://redis:6379/1',
     }
 
 }

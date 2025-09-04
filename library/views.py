@@ -79,7 +79,7 @@ class BookDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'library/book_confirm_delete.html'
     permission_required = 'library.delete_book'
 
-# Cоздаем предоставление
+# Cоздаем представление
 class ReviewBookView(LoginRequiredMixin, View):
     def post(self, request, book_id):
         book = get_object_or_404(Book, id=book_id)
