@@ -2,12 +2,18 @@
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
 from .forms import AutorForm, BookForm
 from .models import Book, Autor
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, View
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
+from .services import BookService
+
 
 class AutorListView(ListView):
     model = Autor
@@ -44,6 +50,8 @@ class BookCreateView(LoginRequiredMixin, PermissionRequiredMixin ,CreateView):
     success_url = reverse_lazy('library:books_list')
     permission_required = 'library.add_book'
 
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class BookDetailView(LoginRequiredMixin,  DetailView):
     model = Book
     template_name = 'library/book_detail.html'
@@ -53,6 +61,10 @@ class BookDetailView(LoginRequiredMixin,  DetailView):
         context = super().get_context_data(**kwargs)
         context['autor_books_count'] = Book.objects.filter(autor=self.object.autor).count()
         return context
+
+        book_id = self.object.id
+        context['avarage_rating'] = BookService.calculate_average_rating(book_id)
+        context['is_popular'] = BookService.is_popular(book_id)
 
 class BookUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Book
@@ -67,7 +79,7 @@ class BookDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'library/book_confirm_delete.html'
     permission_required = 'library.delete_book'
 
-# Cоздаем предоставление
+# Cоздаем представление
 class ReviewBookView(LoginRequiredMixin, View):
     def post(self, request, book_id):
         book = get_object_or_404(Book, id=book_id)
